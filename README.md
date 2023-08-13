@@ -1,5 +1,3 @@
-# This is the project for the end of the IT camp
-
 Project containes folders for API and CLIENT. You only need to modify the client side of the project.
 Open VS Code of the client folder and create the app for the Test.pdf requirements.
 
@@ -100,5 +98,4 @@ Users you can login with:
       .catch((err) => console.log);
     }, []);
 
-## Other instructions can be found in the Test.pdf file inside the Repository.
 # Quotes-app
