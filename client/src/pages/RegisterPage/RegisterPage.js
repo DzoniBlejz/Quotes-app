@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { TokenContext } from "../../context/TokenContext";
-import "./LoginPage.css";
+import "./RegisterPage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -52,15 +52,15 @@ const LoginPage = () => {
 				<form onSubmit={handleLogin}>
 					{invalidCredentials ? (
 						<Alert radius="md" title="Invalid credentials!" color="red">
-							Invalid username or password
+							Email already exists
 						</Alert>
 					) : (
 						<></>
 					)}
 					<TextInput
 						withAsterisk
-						label="Username"
-						placeholder="Username"
+						label="Email"
+						placeholder="Email"
 						value={userData.username}
 						onChange={(event) =>
 							setUserData((prev) => ({
@@ -95,18 +95,6 @@ const LoginPage = () => {
 							color="teal"
 							radius="md"
 							style={{ width: "10rem", letterSpacing: "0.07rem" }}
-						>
-							LOGIN
-						</Button>
-						<Button
-							type="submit"
-							uppercase
-							color="teal"
-							radius="md"
-							style={{
-								width: "10rem",
-								letterSpacing: "0.07rem",
-							}}
 						>
 							Register
 						</Button>
