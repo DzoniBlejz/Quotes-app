@@ -81,6 +81,19 @@ app.post("/register", (request, response) => {
 		});
 });
 
+app.get("/users", auth, (request, response) => {
+	User.find()
+		.then((users) => {
+			response.status(200).send(users);
+		})
+		.catch((error) => {
+			response.status(500).send({
+				message: "Error retrieving users",
+				error,
+			});
+		});
+});
+
 app.post("/login", (request, response) => {
 	User.findOne({ email: request.body.email })
 
@@ -125,6 +138,19 @@ app.post("/login", (request, response) => {
 			response.status(404).send({
 				message: "Email not found",
 				e,
+			});
+		});
+});
+
+app.get("/users", (request, response) => {
+	User.find()
+		.then((users) => {
+			response.status(200).send(users);
+		})
+		.catch((error) => {
+			response.status(500).send({
+				message: "Error retrieving users",
+				error,
 			});
 		});
 });

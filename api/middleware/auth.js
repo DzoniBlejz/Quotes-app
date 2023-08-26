@@ -2,13 +2,17 @@ const jwt = require("jsonwebtoken");
 
 module.exports = async (request, response, next) => {
 	try {
-		//   get the token from the authorization header
-		const token = await request.headers.authorization.split(" ")[1];
-		//check if the token matches the supposed origin
-		const decodedToken = await jwt.verify(token, "RANDOM-TOKEN");
-		const user = await decodedToken;
-		request.user = user;
-		next();
+		// Check if the request is for the /users endpoint
+		if (request.path === "/users" && request.method === "GET") {
+			// Skip token verification for the /users GET endpoint
+			next();
+		} else {
+			// For other endpoints, proceed with token verification
+			const token = request.headers.authorization.split(" ")[1];
+			const decodedToken = jwt.verify(token, "RANDOM-TOKEN");
+			request.user = decodedToken;
+			next();
+		}
 	} catch (error) {
 		response.status(401).json({
 			error: new Error("Invalid request!"),
