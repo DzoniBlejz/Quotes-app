@@ -22,7 +22,7 @@ function DeleteQuoteDialog(props) {
 				>
 					<Button
 						onClick={() => {
-							props.onDeleteQuote(+props.id);
+							props.onDeleteQuote();
 							close();
 						}}
 					>

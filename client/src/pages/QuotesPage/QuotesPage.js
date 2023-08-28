@@ -12,6 +12,7 @@ const QuotesPage = () => {
 	const [valueSelect, setValueSelect] = useState("createdAt");
 	const [addQuote, setAddQuote] = useState(false);
 	const [tags, setTags] = useState([]);
+
 	const dataToShowFilter = tags.map((tag) => {
 		return {
 			value: tag,
@@ -54,9 +55,8 @@ const QuotesPage = () => {
 			.delete(`https://quotes-app-johnny.onrender.com/quotes/${id}`)
 			.then(() => {
 				// Osvežavanje liste citata nakon brisanja
-				setQuotes((prevQuotes) =>
-					prevQuotes.filter((quote) => quote.id !== id)
-				);
+				const filteredQuotes = quotes.filter((quote) => quote._id !== id);
+				setQuotes(filteredQuotes);
 			})
 			.catch((error) => {
 				console.error("Error deleting quote:", error);
@@ -87,7 +87,7 @@ const QuotesPage = () => {
 				/>
 				<AddQuote render={setAddQuote} />
 			</div>
-			{quotes.map((quote) => (
+			{quotes?.map((quote) => (
 				<Quote
 					key={quote._id}
 					content={quote.content}
@@ -96,7 +96,7 @@ const QuotesPage = () => {
 					downvotesCount={quote.downvotesCount}
 					givenVote={quote.givenVote}
 					id={quote._id}
-					onDelete={deleteQuoteAndUpdateList}
+					onDelete={() => deleteQuoteAndUpdateList(quote._id)}
 				/>
 			))}
 
