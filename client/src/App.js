@@ -1,6 +1,5 @@
 import React from "react";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import { Route, Routes } from "react-router-dom";
 import QuotesPage from "./pages/QuotesPage/QuotesPage";
 import NavBar from "./components/NavBar/NavBar";

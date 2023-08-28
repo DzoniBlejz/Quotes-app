@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { TokenContext } from "../../context/TokenContext";
 import "./LoginPage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
 
 import {
 	TextInput,
@@ -15,28 +14,11 @@ import {
 } from "@mantine/core";
 
 const LoginPage = () => {
-	const cookies = new Cookies();
-
 	const navigate = useNavigate();
 	const { setAccessToken } = useContext(TokenContext);
 	const [userData, setUserData] = useState({ username: "", password: "" });
 	const [invalidCredentials, setInvalidCredentials] = useState(false);
 	const [message, setMessage] = useState("");
-
-	// useEffect(() => {
-	// 	const configuration = {
-	// 		method: "get",
-	// 		url: "http://localhost:3000/users",
-	// 	};
-	// 	axios(configuration)
-	// 		.then((result) => {
-	// 			// assign the message in our result to the message we initialized above
-	// 			setMessage(result.data.message);
-	// 		})
-	// 		.catch((error) => {
-	// 			error = new Error();
-	// 		});
-	// }, []);
 
 	const handleLogin = (event) => {
 		event.preventDefault();
@@ -48,7 +30,7 @@ const LoginPage = () => {
 			.then((response) => {
 				setInvalidCredentials(false);
 				setAccessToken(response.data.accessToken);
-				localStorage.setItem("accessToken", response.data.accessToken);
+				localStorage.setItem("accessToken", response.data.token);
 				navigate("/quotes");
 				window.scrollTo(0, 0);
 			})
@@ -58,11 +40,26 @@ const LoginPage = () => {
 					setAccessToken(null);
 					localStorage.removeItem("accessToken");
 				} else {
-					console.log(error);
 					setInvalidCredentials(true);
 					setAccessToken(null);
 					localStorage.removeItem("accessToken");
 				}
+			});
+	};
+
+	const handleRegister = (event) => {
+		event.preventDefault();
+		axios
+			.post("http://localhost:3000/register", {
+				email: userData.username,
+				password: userData.password,
+			})
+			.then((response) => {
+				alert(response.data.message);
+				setUserData({ username: "", password: "" });
+			})
+			.catch((error) => {
+				console.log("neuspesna registracija", error);
 			});
 	};
 
@@ -122,7 +119,7 @@ const LoginPage = () => {
 							LOGIN
 						</Button>
 						<Button
-							type="submit"
+							type="button"
 							uppercase
 							color="teal"
 							radius="md"
@@ -130,6 +127,7 @@ const LoginPage = () => {
 								width: "10rem",
 								letterSpacing: "0.07rem",
 							}}
+							onClick={handleRegister}
 						>
 							Register
 						</Button>

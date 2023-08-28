@@ -11,7 +11,6 @@ const QuotesPage = () => {
 	const [valueFilter, setValueFilter] = useState([]);
 	const [valueSelect, setValueSelect] = useState("createdAt");
 	const [addQuote, setAddQuote] = useState(false);
-	const tagsString = valueFilter.toString();
 	const [tags, setTags] = useState([]);
 	const dataToShowFilter = tags.map((tag) => {
 		return {
@@ -21,8 +20,6 @@ const QuotesPage = () => {
 	});
 
 	const dataSort = [
-		{ value: "author", label: "Author" },
-		{ value: "content", label: "Content" },
 		{ value: "createdAt", label: "Date of create" },
 		{ value: "downvotesCount", label: "Down Votes Count" },
 		{ value: "upvotesCount", label: "Up Votes Count" },
@@ -33,39 +30,42 @@ const QuotesPage = () => {
 	const [totalQuotes, setTotalQuotes] = useState(1);
 	const totalPages = Math.ceil(totalQuotes / pageSize);
 
-	const getTags = () => {
+	useEffect(() => {
 		axios
-			.get(`http://localhost:8000/tags`, {
-				headers: {
-					Authorization: "Bearer " + localStorage.getItem("accessToken"),
+			.get(`http://localhost:3000/quotes`, {
+				params: {
+					page: activePage,
+					author: null,
+					tags: valueFilter.join(","),
+					sort: valueSelect === "date" ? "createdAt" : valueSelect,
+					sortDirection: sortDirection === "asc" ? "asc" : "desc",
 				},
 			})
 			.then((response) => {
-				// console.log(response.data);
-				setTags(response.data);
+				setQuotes(response.data);
+				const tagsFromResponse = response.data.flatMap((quote) => quote.tags);
+				const uniqueTags = [...new Set(tagsFromResponse)];
+				setTags(uniqueTags);
 			})
 			.catch((error) => {
-				// console.log(error);
+				console.error("Greška pri dobavljanju citata:", error);
+			});
+	}, [activePage, valueFilter, valueSelect, sortDirection, addQuote]);
+
+	const deleteQuoteAndUpdateList = (id) => {
+		axios
+			.delete(`http://localhost:3000/quotes/${id}`)
+			.then(() => {
+				// Osvežavanje liste citata nakon brisanja
+				setQuotes((prevQuotes) =>
+					prevQuotes.filter((quote) => quote.id !== id)
+				);
+			})
+			.catch((error) => {
+				console.error("Error deleting quote:", error);
 			});
 	};
 
-	useEffect(() => {
-		getTags();
-		axios
-			.get(
-				`http://localhost:8000/quotes?pageSize=${pageSize}&page=${activePage}&tags=${tagsString}&sortBy=${`${valueSelect}`}&sortDirection=${sortDirection}`,
-				{
-					headers: {
-						Authorization: "Bearer " + localStorage.getItem("accessToken"),
-					},
-				}
-			)
-			.then((response) => {
-				setQuotes(response.data.quotes);
-				setTotalQuotes(response.data.quotesCount);
-			})
-			.catch((error) => {});
-	}, [activePage, totalQuotes, valueFilter, valueSelect, addQuote]);
 	return (
 		<div className="quotes">
 			<div className="quotes-func">
@@ -92,13 +92,14 @@ const QuotesPage = () => {
 			</div>
 			{quotes.map((quote) => (
 				<Quote
-					key={quote.id}
+					key={quote._id}
 					content={quote.content}
 					authorName={quote.author}
 					upvotesCount={quote.upvotesCount}
 					downvotesCount={quote.downvotesCount}
 					givenVote={quote.givenVote}
-					id={quote.id}
+					id={quote._id}
+					onDelete={deleteQuoteAndUpdateList}
 				/>
 			))}
 
