@@ -18,7 +18,6 @@ const LoginPage = () => {
 	const { setAccessToken } = useContext(TokenContext);
 	const [userData, setUserData] = useState({ username: "", password: "" });
 	const [invalidCredentials, setInvalidCredentials] = useState(false);
-	const [message, setMessage] = useState("");
 
 	const handleLogin = (event) => {
 		event.preventDefault();
@@ -65,9 +64,6 @@ const LoginPage = () => {
 
 	return (
 		<div className="main-login">
-			<div>
-				<h1>{message}</h1>
-			</div>
 			<Box sx={{ minWidth: 340 }} mx="auto" className="login-box">
 				<form onSubmit={handleLogin}>
 					{invalidCredentials ? (
