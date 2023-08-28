@@ -19,7 +19,7 @@ const AddQuote = ({ render }) => {
 		const userId = decodedToken.userId;
 		axios
 			.post(
-				`http://localhost:3000/quotes`,
+				`https://quotes-app-johnny.onrender.com/quotes`,
 				{
 					content: userInput.content,
 					author: userInput.author,

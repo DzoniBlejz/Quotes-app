@@ -29,7 +29,7 @@ const QuotesPage = () => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:3000/quotes`, {
+			.get(`https://quotes-app-johnny.onrender.com/quotes`, {
 				params: {
 					page: activePage,
 					author: null,
@@ -51,7 +51,7 @@ const QuotesPage = () => {
 
 	const deleteQuoteAndUpdateList = (id) => {
 		axios
-			.delete(`http://localhost:3000/quotes/${id}`)
+			.delete(`https://quotes-app-johnny.onrender.com/quotes/${id}`)
 			.then(() => {
 				// Osvežavanje liste citata nakon brisanja
 				setQuotes((prevQuotes) =>

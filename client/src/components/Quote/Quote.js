@@ -43,7 +43,7 @@ const Quote = ({
 	const postVote = (newVoteType) => {
 		axios
 			.put(
-				`http://localhost:3000/quotes/${id}/vote`,
+				`https://quotes-app-johnny.onrender.com/quotes/${id}/vote`,
 				{ voteType: newVoteType },
 				{
 					headers: {

@@ -22,7 +22,7 @@ const LoginPage = () => {
 	const handleLogin = (event) => {
 		event.preventDefault();
 		axios
-			.post("http://localhost:3000/login", {
+			.post("https://quotes-app-johnny.onrender.com/login", {
 				email: userData.username,
 				password: userData.password,
 			})
@@ -49,7 +49,7 @@ const LoginPage = () => {
 	const handleRegister = (event) => {
 		event.preventDefault();
 		axios
-			.post("http://localhost:3000/register", {
+			.post("https://quotes-app-johnny.onrender.com/register", {
 				email: userData.username,
 				password: userData.password,
 			})
