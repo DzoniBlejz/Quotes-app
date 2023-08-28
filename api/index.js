@@ -330,7 +330,6 @@ app.put("/quotes/:quoteId/vote", (request, response) => {
 app.delete("/quotes/:id", (req, res) => {
 	const quoteId = req.params.id;
 
-	// Pronalaženje citata po ID-u i brisanje
 	Quote.findByIdAndDelete(quoteId)
 		.then(() => {
 			res.status(204).send(); // Vraćanje statusa "No Content" (uspešno brisanje)
@@ -341,16 +340,6 @@ app.delete("/quotes/:id", (req, res) => {
 				error,
 			});
 		});
-});
-
-// free endpoint
-app.get("/free-endpoint", (request, response) => {
-	response.json({ message: "You are free to access me anytime" });
-});
-
-// authentication endpoint
-app.get("/auth-endpoint", auth, (request, response) => {
-	response.json({ message: "You are authorized to access me" });
 });
 
 app.listen(3000, () => {

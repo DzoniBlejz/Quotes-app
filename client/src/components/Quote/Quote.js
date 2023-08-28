@@ -45,6 +45,7 @@ const Quote = ({
 			console.log("You have already voted for this quote.");
 			return;
 		}
+
 		axios
 			.put(
 				`https://quotes-app-johnny.onrender.com/quotes/${id}/vote`,
@@ -55,18 +56,10 @@ const Quote = ({
 					},
 				}
 			)
-			.then(() => {
-				if (newVoteType === "upvote") {
-					setUpVotesCount(upVotesCount + 1);
-					setDownVotesCount(downVotesCount - (vote === "downvote" ? 1 : 0));
-				} else if (newVoteType === "downvote") {
-					setDownVotesCount(downVotesCount + 1);
-					setUpVotesCount(upVotesCount - (vote === "upvote" ? 1 : 0));
-				} else {
-					// Removing the vote
-					setUpVotesCount(upVotesCount - (vote === "upvote" ? 1 : 0));
-					setDownVotesCount(downVotesCount - (vote === "downvote" ? 1 : 0));
-				}
+			.then((response) => {
+				const updatedQuote = response.data;
+				setUpVotesCount(updatedQuote.upvotesCount);
+				setDownVotesCount(updatedQuote.downvotesCount);
 				setVote(newVoteType);
 				toast("Vote updated successfully!", {
 					icon: "👍",
@@ -82,7 +75,6 @@ const Quote = ({
 			.catch((error) => {
 				console.error("Error updating vote:", error);
 			});
-		localStorage.setItem(`vote_${id}`, newVoteType);
 	};
 
 	return (
