@@ -105,7 +105,7 @@ const QuotesPage = () => {
 				page={activePage}
 				onChange={setPage}
 				onClick={window.scrollTo(0, 0)}
-				total={5}
+				total={1}
 				color="teal"
 				radius="md"
 			/>
