@@ -7,8 +7,6 @@ import { IconAlertCircle } from "@tabler/icons-react";
 function DeleteQuoteDialog(props) {
 	const [opened, { close, open }] = useDisclosure(false);
 
-	console.log(typeof props.id, "props.id");
-
 	return (
 		<>
 			<Modal opened={opened} onClose={close} size="auto" title="">
@@ -36,15 +34,15 @@ function DeleteQuoteDialog(props) {
 			<button onClick={open}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="icon icon-tabler icon-tabler-trash"
+					className="icon icon-tabler icon-tabler-trash"
 					width="22"
 					height="20"
 					viewBox="0 0 24 24"
-					stroke-width="2"
+					strokeWidth="2"
 					stroke="currentColor"
 					fill="none"
-					stroke-linecap="round"
-					stroke-linejoin="round"
+					strokeLinecap="round"
+					strokeLinejoin="round"
 				>
 					<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
 					<path d="M4 7l16 0"></path>
