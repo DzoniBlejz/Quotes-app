@@ -162,4 +162,19 @@
 		height: 0.8rem; /* Reduce the icon size */
 		font-size: 1.5rem; /* Reduce the font size */
 	}
+	.percent {
+		font-size: 0.9rem;
+		position: relative;
+		top: 1rem;
+		left: 0.4rem;
+		letter-spacing: 0.1rem;
+	}
+	.ratio {
+		position: relative;
+		padding-top: 0.1rem;
+		font-size: 0.7rem;
+		top: 0.8rem;
+		z-index: 5;
+		color: #e4e7e6;
+	}
 }
