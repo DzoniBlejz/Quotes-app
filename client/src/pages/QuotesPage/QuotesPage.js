@@ -26,9 +26,6 @@ const QuotesPage = () => {
 	];
 	const sortDirection =
 		valueSelect === "author" || valueSelect === "content" ? "asc" : "desc";
-	const pageSize = 5;
-	const [totalQuotes, setTotalQuotes] = useState(1);
-	const totalPages = Math.ceil(totalQuotes / pageSize);
 
 	useEffect(() => {
 		axios
@@ -108,7 +105,7 @@ const QuotesPage = () => {
 				page={activePage}
 				onChange={setPage}
 				onClick={window.scrollTo(0, 0)}
-				total={totalPages}
+				total={5}
 				color="teal"
 				radius="md"
 			/>
