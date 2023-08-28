@@ -41,6 +41,10 @@ const Quote = ({
 			: "color6";
 
 	const postVote = (newVoteType) => {
+		if (vote === newVoteType) {
+			console.log("You have already voted for this quote.");
+			return;
+		}
 		axios
 			.put(
 				`https://quotes-app-johnny.onrender.com/quotes/${id}/vote`,
