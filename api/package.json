@@ -14,7 +14,9 @@
     "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^9.0.1",
+    "jwt-decode": "^3.1.2",
     "mongoose": "^7.4.3",
+    "string-similarity": "^4.0.4",
     "uuidv4": "^6.1.1"
   },
   "author": "Glisovic Nikola",
