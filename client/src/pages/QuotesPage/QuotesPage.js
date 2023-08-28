@@ -96,6 +96,7 @@ const QuotesPage = () => {
 					downvotesCount={quote.downvotesCount}
 					givenVote={quote.givenVote}
 					id={quote._id}
+					userId={quote.userId}
 					onDelete={() => deleteQuoteAndUpdateList(quote._id)}
 				/>
 			))}

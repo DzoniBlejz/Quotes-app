@@ -3,9 +3,13 @@ import { Modal, Button, Group } from "@mantine/core";
 
 import { Alert } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
+import jwtDecode from "jwt-decode";
 
 function DeleteQuoteDialog(props) {
 	const [opened, { close, open }] = useDisclosure(false);
+	const token = localStorage.getItem("accessToken");
+	const { userEmail, userId: idOfUser } = jwtDecode(token);
+	const quoteCreator = props.userId === idOfUser;
 
 	return (
 		<>
@@ -31,7 +35,17 @@ function DeleteQuoteDialog(props) {
 					<Button onClick={close}>Ne</Button>
 				</Group>
 			</Modal>
-			<button onClick={open}>
+			<button
+				style={{
+					display:
+						userEmail === "admin@admin.rs"
+							? "block"
+							: quoteCreator
+							? "block"
+							: "none",
+				}}
+				onClick={open}
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					className="icon icon-tabler icon-tabler-trash"

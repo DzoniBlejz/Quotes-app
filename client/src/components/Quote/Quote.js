@@ -12,6 +12,7 @@ const Quote = ({
 	downvotesCount,
 	givenVote,
 	onDelete,
+	userId,
 }) => {
 	const storedVote = localStorage.getItem(`vote_${id}`);
 
@@ -105,7 +106,7 @@ const Quote = ({
 			</div>
 			<div className="right">
 				<div style={{ marginLeft: "auto" }}>
-					<DeleteQuote id={id} onDeleteQuote={onDelete} />
+					<DeleteQuote id={id} onDeleteQuote={onDelete} userId={userId} />
 				</div>
 
 				<p className="content">{content}</p>
