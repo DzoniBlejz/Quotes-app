@@ -13,6 +13,12 @@ const QuotesPage = () => {
 	const [addQuote, setAddQuote] = useState(false);
 	const [tags, setTags] = useState([]);
 
+	const [searchText, setSearchText] = useState("");
+
+	const filteredQuotes = quotes.filter((quote) =>
+		quote.content.toLowerCase().includes(searchText.toLowerCase())
+	);
+
 	const dataToShowFilter = tags.map((tag) => {
 		return {
 			value: tag,
@@ -65,6 +71,14 @@ const QuotesPage = () => {
 
 	return (
 		<div className="quotes">
+			<div>
+				<input
+					type="text"
+					placeholder="Search quotes..."
+					value={searchText}
+					onChange={(e) => setSearchText(e.target.value)}
+				/>
+			</div>
 			<div className="quotes-func">
 				<Select
 					label="Sort Quotes by:"
@@ -87,9 +101,10 @@ const QuotesPage = () => {
 				/>
 				<AddQuote render={setAddQuote} />
 			</div>
-			{quotes?.map((quote) => (
+
+			{filteredQuotes.map((quote) => (
 				<Quote
-					key={quote._id}
+					ey={quote._id}
 					content={quote.content}
 					authorName={quote.author}
 					upvotesCount={quote.upvotesCount}
@@ -100,6 +115,22 @@ const QuotesPage = () => {
 					onDelete={() => deleteQuoteAndUpdateList(quote._id)}
 				/>
 			))}
+
+			{filteredQuotes
+				? ""
+				: quotes?.map((quote) => (
+						<Quote
+							key={quote._id}
+							content={quote.content}
+							authorName={quote.author}
+							upvotesCount={quote.upvotesCount}
+							downvotesCount={quote.downvotesCount}
+							givenVote={quote.givenVote}
+							id={quote._id}
+							userId={quote.userId}
+							onDelete={() => deleteQuoteAndUpdateList(quote._id)}
+						/>
+				  ))}
 
 			<Pagination
 				className="pagination"
